@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Visual Iterative Prompting | Limits and Potential of Zero-Shot Robot Control</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="./static/css/academicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 publication-title">Visual Iterative Prompting: Limits and Potential of Zero-Shot Robot Control</h1>
+                        <!-- <h3 class="title is-4 conference-authors"><a target="_blank" href="https://icml.cc/">ICML 2023</a>
+                    </h3> -->
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+                                <a target="_blank" href="https://www.seas.upenn.edu/~jasonyma/">
+                                    Anonymous&#160;Authors</a>
+                                    <a href="mailto:jasonyma@seas.upenn.edu">
+                                        <span class="icon">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                    </a>
+                                    <sup>1 2</sup>,
+                                <!-- <a target="_blank"
+                                    href="https://www.seas.upenn.edu/~wjhliang/">William&#160;Liang</a><sup>2</sup>,
+
+                                <a target="_blank" href="https://guanzhi.me/">Guanzhi&#160;Wang</a><sup>1 3</sup>,
+                                <a target="_blank"
+                                    href="https://ai.stanford.edu/~dahuang/">De-An&#160;Huang</a><sup>1</sup>,
+                                <br>
+                                <a target="_blank"
+                                    href="https://obastani.github.io/">Osbert&#160;Bastani</a><sup>2</sup>,
+                                <a target="_blank"
+                                    href="https://www.seas.upenn.edu/~dineshj/">Dinesh&#160;Jayaraman</a><sup>2</sup>,
+
+                                <a target="_blank" href="https://www.cs.utexas.edu/~yukez/">Yuke&#160;Zhu</a><sup>1
+                                    4</sup>,
+                                <a target="_blank" href="https://jimfan.me/">Linxi&#160;"Jim"&#160;Fan</a>
+                                <a href="mailto:dr.jimfan.ai@gmail.com">
+                                    <span class="icon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </a>
+                                <sup>1&#8225</sup>,
+                                <a target="_blank"
+                                    href="http://tensorlab.cms.caltech.edu/users/anima/">Anima&#160;Anandkumar</a><sup>1
+                                    3&#8225</sup> -->
+                            </span>
+                        </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>Google DeepMind </span>
+                        </div>
+                        <div class="is-size-5 publication-authors">
+
+                        <span class="author-block">
+                                    <span class="icon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                            Corresponding authors: visualiterativeprompting@gmail.com
+                        </span>
+                        </div>
+                        <!-- <div class="is-size-5 publication-authors">
+                        <span class="author-block">Work done during the first author's internship at NVIDIA</span>
+                        </div> -->
+
+                        <!-- <div class="is-size-5 publication-authors">
+                        <span class="author-block"><sup>&dagger;</sup>Equal Contribution</span>
+                        <span class="author-block"><sup>&#8225;</sup>Equal Advising </span>
+                    </div> -->
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <!-- TODO REPLACE ALL LINKS -->
+                                <span class="link-block">
+                                    <a target="_blank" href="#"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv</span>
+                                    </a>
+                                </span>
+
+                                <span class="link-block">
+                                    <a target="_blank" href="#"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </span>
+                                        <span>PDF</span>
+                                    </a>
+                                    <a target="_blank" href="#"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code</span>
+                                    </a>
+                                    <!-- <a target="_blank" href="https://github.com/vimalabs/VIMA#pretrained-models"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fa fa-network-wired"></i>
+                                        </span>
+                                        <span>Models</span>
+                                    </a> -->
+                                    <!-- <a target="_blank" href="https://github.com/vimalabs/VimaBench"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-robot"></i>
+                                        </span>
+                                        <span>Benchmark</span>
+                                    </a> -->
+                                    <!-- <a target="_blank" href="https://huggingface.co/datasets/VIMA/VIMA-Data"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-database"></i>
+                                        </span>
+                                        <span>Dataset</span>
+                                    </a> -->
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="padding: 0">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+                <video poster="" id="" autoplay controls muted loop width="100%" playbackRate=2.0 style="border-radius: 5px;">
+                    <source src="videos/eureka_zoomout.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+                <div class="column">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p style="font-size: 125%">
+                            Large vision language models (VLMs) have shown impressive capabilities across a variety of tasks, from logical reasoning to visual understanding.
+                            These wide ranging capabilities are a natural fit for embodied tasks such as robotics. 
+                            In this work we pose the question, how can VLMs be directly applied to robotics at lowest level, to robot control?
+                            We propose an approach based on visual prompting and iterative optimization, which we term Visual Iterative Prompting (VIP), an approach towards robustly and precisely grounding vision language models (VLM).
+                            VIP works through iteratively refining a visual prompt.
+                            Given a query, VIP first annotates the image with possible responses, then queries the VLM for which annotations best answer the question. 
+                            Using this response, it then fits a distribution to the responses, samples new annotations from this distribution, and requires the VLM.
+                            As such, VIP is capable of tasks such as zero-shot robotic manipulation and navigation, as well as tasks requiring reasoning over image space.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="rows">
+                <div class="rows is-centered ">
+                    <div class="row is-full-width">
+                        <h2 class="title is-3"><span class="dvima">Visual Iterative Prompting</span></h2>
+                        <p style="font-size: 125%">
+                            In this demo, we...
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="columns" style="align-items: end;">
+                <div class="column is-half">
+                    <p style="font-size: 1.5em"><b>Isaac</b></p>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <img src="videos/task_final/allegro_hand.png" width="18%" style="border-radius: 5px;" alt='<b>AllegroHand</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/allegro_hand.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/ant.png" width="18%" style="border-radius: 5px;" alt='<b>Ant</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/ant.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/anymal.png" width="18%" style="border-radius: 5px;" alt='<b>Anymal</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/anymal.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/ball_balance.png" width="18%" style="border-radius: 5px;" alt='<b>BallBalance</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/ball_balance.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/cartpole.png" width="18%" style="border-radius: 5px;" alt='<b>Cartpole</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/cartpole.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/franka_cabinet.png" width="18%" style="border-radius: 5px;" alt='<b>FrankaCabinet</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/franka_cabinet.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/humanoid.png" width="18%" style="border-radius: 5px;" alt='<b>Humanoid</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/humanoid.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/quadcopter.png" width="18%" style="border-radius: 5px;" alt='<b>Quadcopter</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/quadcopter.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/shadow_hand.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHand</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand.txt' onclick="populateDemo(this, 1);">
+                    </div>
+
+                    <br>
+                    <p style="font-size: 1.5em"><b>Dexterity</b></p>
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <img src="videos/task_final/bidex_block_stacking.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandBlockStack</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_block_stack.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_bottle_cap.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandBottleCap</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_bottle_cap.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_catch_abreast.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandCatchAbreast</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_catch_abreast.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_catch_over2underarm.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandCatchOver2Underarm</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_catch_over_2_underarm.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_catch_underarm.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandCatchUnderarm</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_catch_underarm.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_door_close_inward.png" width="18%" style="border-radius: 5px;"
+                            alt='<b>ShadowHandDoorCloseInward</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_door_close_inward.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_door_close_outward.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandDoorCloseOutward</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_door_close_outward.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_door_open_inward.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandDoorOpenInward</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_door_open_inward.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_door_open_outward.png" width="18%" style="border-radius: 5px;"
+                            alt='<b>ShadowHandDoorOpenOutward</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_door_open_outward.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_grasp_and_place.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandGraspAndPlace</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_grasp_and_place.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_kettle.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandKettle</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_kettle.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_lift_undearm.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandLiftUnderarm</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_lift_underarm.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_over.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandOver</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_over.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_pen.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandPen</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_pen.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_push_block.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandPushBlock</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_push_block.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_re_orientation.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandReorientation</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_reorientation.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_scissors.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandScissors</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_scissors.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_swing_cup.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandSwingCup</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_swing_cup.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_switch.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandSwitch</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_switch.txt' onclick="populateDemo(this, 1);">
+
+                        <img src="videos/task_final/bidex_two_catch_underarm.png" width="18%" style="border-radius: 5px;" alt='<b>ShadowHandTwoCatchUnderarm</b>, best Eureka reward:
+                        [sep]
+                        assets/reward_functions/shadow_hand_two_catch_underarm.txt' onclick="populateDemo(this, 1);">
+                    </div>
+                </div>
+                <div class="row border rounded" style="padding-top:12px; padding-bottom:12px;">
+                    <div class="col-md-6">
+                        <video id="demo-video-1" style="border-radius: 5px;" autoplay loop muted webkit-playsinline
+                            playsinline onclick="setAttribute('controls', 'true');">
+                            <source id="expandedImg-1" src="videos/placeholder.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="imgtext-1" style="font-size: 1.5em">Select an image above:</div>
+                <div>
+                    <pre
+                        class="p-1"><code class="language-python" id="answer-1">Eureka response shown within code block.</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="rows">
+                <div class="rows is-centered ">
+                    <div class="row is-full-width">
+                        <h2 class="title is-3"><span class="dvima">Results Gallery</span></h2>
+                        <p style="font-size: 125%">
+                            Here we show some qualitative video results.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="hero is-light is-small"> -->
+        <div>
+
+            <div class="hero-body">
+                <div class="container is-max-desktop">
+                    <div class="columns is-centered has-text-centered">
+                        <video poster="" id="" autoplay controls muted loop width="80%" playbackRate=2.0 style="border-radius: 5px;">
+                            <source src="videos/pen_styles.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <br>
+                <div class="container">
+                    <div id="results-carousel" class="carousel results-carousel">
+                        <div class="item">
+                            <video poster="" id="" autoplay controls muted loop height="100%" playbackRate=2.0>
+                                <source src="videos/pen_gallery/pen_spin_center.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item">
+                            <video poster="" id="" autoplay controls muted loop height="100%" playbackRate=2.0>
+                                <source src="videos/pen_gallery/pen_spin_upside_down.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item">
+                            <video poster="" id="" autoplay controls muted loop height="100%" playbackRate=2.0>
+                                <source src="videos/pen_gallery/pen_spin_custom_-11-1.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item">
+                            <video poster="" id="" autoplay controls muted loop height="100%" playbackRate=2.0>
+                                <source src="videos/pen_gallery/pen_spin_custom_-101.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item">
+                            <video poster="" id="" autoplay controls muted loop height="100%" playbackRate=2.0>
+                                <source src="videos/pen_gallery/pen_spin_custom_-110.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item">
+                            <video poster="" id="" autoplay controls muted loop height="100%" playbackRate=2.0>
+                                <source src="videos/pen_gallery/pen_spin_custom_-1.0,1.0,-1.0.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item">
+                            <video poster="" id="" autoplay controls muted loop height="100%" playbackRate=2.0>
+                                <source src="videos/pen_gallery/pen_spin_custom_1.0,0.0,0.0.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item">
+                            <video poster="" id="" autoplay controls muted loop height="100%" playbackRate=2.0>
+                                <source src="videos/pen_gallery/pen_spin_custom_0-11.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="item">
+                            <video poster="" id="" autoplay controls muted loop height="100%" playbackRate=2.0>
+                                <source src="videos/pen_gallery/pen_spin_custom_withflip_0.0,-1.0,0.0.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+   
+
+<section class="section" id="BibTeX">
+    <div class="container is-max-widescreen content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@article{ma2023eureka,
+    title   = {Visual Iterative Prompting: Limits and Potential of Zero-Shot Robot Control},
+    author  = {Anonymous},
+    year    = {2023},
+    journal = {arXiv preprint}
+}
+</code></pre>
+    </div>
+</section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column">
+                    <div class="content has-text-centered">
+                        <p>
+                            Website template forked from <a
+                                href="https://eureka-research.github.io/">Eureka</a>, <a
+                                href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>,
+                            <a href="https://vimalabs.github.io/">VIMA</a>, and <a
+                                href="https://language-to-reward.github.io/">L2R</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+<script>
+
+    timeoutIds = [];
+
+    function populateDemo(imgs, num) {
+        // Get the expanded image
+        var expandImg = document.getElementById("expandedImg-" + num);
+        // Get the image text
+        var imgText = document.getElementById("imgtext-" + num);
+        var answer = document.getElementById("answer-" + num);
+
+        // Use the same src in the expanded image as the image being clicked on from the grid
+        expandImg.src = imgs.src.replace(".png", ".mp4");
+        var video = document.getElementById('demo-video-' + num);
+        // or video = $('.video-selector')[0];
+        video.pause()
+        video.load();
+        video.play();
+        video.removeAttribute('controls');
+
+        console.log(expandImg.src);
+        // Use the value of the alt attribute of the clickable image as text inside the expanded image
+        var qa = imgs.alt.split("[sep]");
+        imgText.innerHTML = qa[0];
+        answer.innerHTML = "";
+        // Show the container element (hidden with CSS)
+        expandImg.parentElement.style.display = "block";
+        for (timeoutId of timeoutIds) {
+            clearTimeout(timeoutId);
+        }
+
+        // NOTE (wliang): Modified from original to read from file instead
+        fetch(qa[1])
+            .then(response => response.text())
+            .then(contents => {
+                // Call the processData function and pass the contents as an argument
+                typeWriter(contents, 0, qa[0], num);
+            })
+            .catch(error => console.error('Error reading file:', error));
+    }
+
+    function typeWriter(txt, i, q, num) {
+        var imgText = document.getElementById("imgtext-" + num);
+        var answer = document.getElementById("answer-" + num);
+        if (imgText.innerHTML == q) {
+            for (let k = 0; k < 5; k++) {
+                if (i < txt.length) {
+                    if (txt.charAt(i) == "\\") {
+                        answer.innerHTML += "\n";
+                        i += 1;
+                    } else {
+                        answer.innerHTML += txt.charAt(i);
+                    }
+                    i++;
+                }
+            }
+            hljs.highlightAll();
+            timeoutIds.push(setTimeout(typeWriter, 1, txt, i, q, num));
+        }
+    }
+
+</script>
+
+</html>
